@@ -9,10 +9,15 @@ var DumpIronman = cc.Sprite.extend({
 	},
 
 	update: function( dt ){
+		var pos = this.getPosition();
+
 		if( this.started ){
-			var pos = this.getPosition();
-        	this.setPosition( new cc.Point( pos.x, pos.y + this.vy ) );
+			this.setPosition( new cc.Point( pos.x, pos.y + this.vy ) );
         	this.vy += DumpIronman.G;
+		}
+		if ( pos.y <= screenHeight / 3 ) {
+
+			this.vy = DumpIronman.STOP;
 		}
     },
 
@@ -33,3 +38,4 @@ var DumpIronman = cc.Sprite.extend({
 DumpIronman.G = -1;
 DumpIronman.STARTING_VELOCITY = 15;
 DumpIronman.JUMPING_VELOCITY = 20;
+DumpIronman.STOP = 0;
