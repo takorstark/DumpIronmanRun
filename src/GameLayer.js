@@ -17,6 +17,8 @@ var GameLayer = cc.LayerColor.extend({
 
         this.state = GameLayer.STATES.FRONT;
 
+        this.rock = null;
+
         this.scheduleUpdate();
 
         return true
@@ -24,16 +26,25 @@ var GameLayer = cc.LayerColor.extend({
 
     onKeyDown: function( e ){
         this.player.start();
-
+        
         if( this.state == GameLayer.STATES.FRONT ) {
             this.startGame();
             this.state = GameLayer.STATES.STARTED;
         } else if( this.state == GameLayer.STATES.STARTED ) {
-            this.player.jump();
+            if( e == cc.KEY.space )    
+                this.player.jump();
         } 
     },
 
+    createRock: function() {
+        this.rock = new Rock();
+        this.rock.setPosition( new cc.Point( 900, 310 ) );
+        this.addChild( this.rock );
+        this.rock.scheduleUpdate();
+    },
+
     startGame: function() {
+        this.createRock();
         this.player.start();
         this.player.jump();
     },
