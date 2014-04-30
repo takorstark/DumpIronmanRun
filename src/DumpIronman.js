@@ -16,8 +16,10 @@ var DumpIronman = cc.Sprite.extend({
         	this.vy += DumpIronman.G;
 		}
 		if ( pos.y <= screenHeight / 3 ) {
-
 			this.vy = DumpIronman.STOP;
+			if( this.vy < screenHeight / 3 ){
+				this.setPosition( new cc.Point( pos.x, screenHeight / 3 ) );
+			}
 		}
     },
 
