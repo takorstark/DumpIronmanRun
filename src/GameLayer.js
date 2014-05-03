@@ -4,6 +4,8 @@ var GameLayer = cc.LayerColor.extend({
         this._super( new cc.Color4B( 127, 127, 127, 255 ) );
         this.setPosition( new cc.Point( 0, 0 ) );
 
+        this.createBg();
+
         this.player = new DumpIronman();
         this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 3 ) );
         this.addChild( this.player, 1 )
@@ -55,6 +57,12 @@ var GameLayer = cc.LayerColor.extend({
         this.rock.setPosition( new cc.Point( 900, 315 ) );
         this.addChild( this.rock );
         this.rock.scheduleUpdate();
+    },
+
+    createBg: function() {
+        this.bg = cc.Sprite.create( ' images/bg1.png ' );
+        this.bg.setPosition( new cc.Point( 400, 430 ) );
+        this.addChild( this.bg );
     },
 
     startGame: function() {
