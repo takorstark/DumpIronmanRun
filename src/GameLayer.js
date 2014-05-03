@@ -21,8 +21,6 @@ var GameLayer = cc.LayerColor.extend({
 
         // this.rock = null;
 
-        this.j = 0;
-
         this.scheduleUpdate();
 
         return true;
@@ -61,6 +59,7 @@ var GameLayer = cc.LayerColor.extend({
 
     startGame: function() {
         this.createRock();
+        this.ground.start();
         this.player.start();
         this.player.jump();
     },

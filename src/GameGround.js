@@ -17,29 +17,40 @@ var GameGround = cc.Sprite.extend({
         this.ground3.setPosition( new cc.Point( 1200, 80 ) );
         this.addChild( this.ground3 );
 
+        this.started = false;
 
 	},
 
 	update: function( dt ) {
-		this.pos1 = this.ground1.getPositionX();
-		this.pos2 = this.ground2.getPositionX();
-		this.pos3 = this.ground3.getPositionX();
+		if( this.started ){
+			this.pos1 = this.ground1.getPositionX();
+			this.pos2 = this.ground2.getPositionX();
+			this.pos3 = this.ground3.getPositionX();
 
-		this.ground1.setPositionX( this.pos1 - 5 );
-		this.ground2.setPositionX( this.pos2 - 5 );
-		this.ground3.setPositionX( this.pos3 - 5 );
+			this.ground1.setPositionX( this.pos1 - 5 );
+			this.ground2.setPositionX( this.pos2 - 5 );
+			this.ground3.setPositionX( this.pos3 - 5 );
 
-		if( this.pos1 < -1600 ){
-			this.ground1.setPositionX( 790 );
-		}
-		if( this.pos2 < -1600 ){
-			this.ground2.setPositionX( 790 );
-		}
-		if( this.pos3 < -1600 ){
-			this.ground3.setPositionX( 790 );
+			if( this.pos1 < -1600 ){
+				this.ground1.setPositionX( 790 );
+			}
+			if( this.pos2 < -1600 ){
+				this.ground2.setPositionX( 790 );
+			}
+			if( this.pos3 < -1600 ){
+				this.ground3.setPositionX( 790 );
+			}
 		}
 		
 	},
+
+	start: function() {
+		this.started = true;
+	},
+
+	stop: function() {
+		this.started = false;
+	}
 
 
 })
