@@ -30,7 +30,7 @@ var shootBullet = cc.Sprite.extend({
 	moveBullet: function() {
 		var pos = this.getPositionX();
 
-		this.setPositionX( this.getPositionX() - 5 );
+		this.setPositionX( this.getPositionX() - 7 );
 
 		if( pos < 0 ){
 			this.randomPositionY();

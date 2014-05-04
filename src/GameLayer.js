@@ -37,6 +37,7 @@ var GameLayer = cc.LayerColor.extend({
                  this.player.jump();
                  this.j++;
             }
+            else if( e == cc.KEY.  )
                
         } 
     },

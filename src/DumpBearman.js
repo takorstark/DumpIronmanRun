@@ -14,6 +14,8 @@ var DumpBearman = cc.Sprite.extend({
 
 		this.started = false;
 
+		this.run = false;
+
 		this.j = 0;
 	},
 	
@@ -39,6 +41,16 @@ var DumpBearman = cc.Sprite.extend({
 			return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	},
 
+	slashAnimation: function() {
+		var animation = new cc.Animation.create();
+			animation.addSpriteFrameWithFile( 'images/sprite5-1.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite5-slash1.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite5-slash2.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite5-slash3.png' );
+			animation.setDelayPerUnit( 0.1 );
+			return cc.RepeatForever.create( cc.Animate.create( animation ) );
+	},
+
 	update: function( dt ){
 		var pos = this.getPosition();
 
@@ -54,14 +66,18 @@ var DumpBearman = cc.Sprite.extend({
 		}
 		if( pos.y == screenHeight / 3 ){
 			this.j = 0;
-			
+			if( this.run ){
+				this.running();
+			}
 		}
     },
 
-    run: function() {
+    running: function() {
     	this.bear.stopAction( this.bear.movingAction );
 		this.bear.movingAction = this.runAnimation();
 		this.bear.runAction( this.bear.movingAction );
+
+		this.run = false;
     },
 
 	jump: function() {
@@ -73,11 +89,15 @@ var DumpBearman = cc.Sprite.extend({
 		this.bear.stopAction( this.bear.movingAction );
 		this.bear.movingAction = this.jumpAnimation();
 		this.bear.runAction( this.bear.movingAction );
+
+		this.run = true;
 		
 	},
 
 	slash: function() {
-
+    	this.bear.stopAction( this.bear.movingAction );
+		this.bear.movingAction = this.runAnimation();
+		this.bear.runAction( this.bear.movingAction );
 	},
 
 	start: function() {
