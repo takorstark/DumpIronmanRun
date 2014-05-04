@@ -7,12 +7,12 @@ var GameLayer = cc.LayerColor.extend({
         this.createBg();
 
         this.player = new DumpIronman();
-        this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 3 ) );
+        this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 4 ) );
         this.addChild( this.player, 1 )
         this.player.scheduleUpdate();
 
         this.ground = new GameGround();
-        this.ground.setPosition( new cc.Point( screenWidth / 2,  screenHeight / 11.5 ) );
+        // this.ground.setPosition( new cc.Point( screenWidth / 2,  screenHeight / 12 ) );
         this.addChild( this.ground );
         this.ground.scheduleUpdate();
 
@@ -54,20 +54,19 @@ var GameLayer = cc.LayerColor.extend({
 
     createRock: function() {
         this.rock = new Rock();
-        this.rock.setPosition( new cc.Point( 900, 315 ) );
+        this.rock.setPosition( new cc.Point( 900, 275 ) );
         this.addChild( this.rock );
         this.rock.scheduleUpdate();
     },
 
     createBg: function() {
         this.bg = cc.Sprite.create( ' images/bg1.png ' );
-        this.bg.setPosition( new cc.Point( 400, 430 ) );
+        this.bg.setPosition( new cc.Point( 400, 390 ) );
         this.addChild( this.bg );
     },
 
     startGame: function() {
         this.createRock();
-        this.ground.start();
         this.player.start();
         this.player.jump();
     },
