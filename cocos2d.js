@@ -13,7 +13,7 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/GameLayer.js',
-            'src/DumpIronman.js',
+            'src/DumpBearman.js',
             'src/GameGround.js',
             'src/Rock.js'     //add your own files in order here
         ]

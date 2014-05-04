@@ -1,16 +1,16 @@
-var DumpIronman = cc.Sprite.extend({
+var DumpBearman = cc.Sprite.extend({
 	ctor: function() {
 		this._super();
 
-		this.ironman = cc.Sprite.create( ' images/sprite1.png ' );
-		this.ironman.setPosition( new cc.Point( 0, -45 ) );
-        this.addChild( this.ironman, 1 )
-        this.ironman.scheduleUpdate();
+		this.bear = cc.Sprite.create( ' images/sprite1.png ' );
+		this.bear.setPosition( new cc.Point( 0, -45 ) );
+        this.addChild( this.bear, 1 )
+        this.bear.scheduleUpdate();
 
-		this.ironman.movingAction = this.createAnimation();
-		this.ironman.runAction( this.ironman.movingAction );
+		this.bear.movingAction = this.createAnimation();
+		this.bear.runAction( this.bear.movingAction );
 
-		this.vy = DumpIronman.STARTING_VELOCITY;
+		this.vy = DumpBearman.STARTING_VELOCITY;
 
 		this.started = false;
 
@@ -37,10 +37,10 @@ var DumpIronman = cc.Sprite.extend({
 
 		if( this.started ){
 			this.setPosition( new cc.Point( pos.x, pos.y + this.vy ) );
-        	this.vy += DumpIronman.G;
+        	this.vy += DumpBearman.G;
 		}
 		if( pos.y <= screenHeight / 3 ) {
-			this.vy = DumpIronman.STOP;
+			this.vy = DumpBearman.STOP;
 			if( this.vy < screenHeight / 3 ){
 				this.setPosition( new cc.Point( pos.x, screenHeight / 3 ) );
 			}
@@ -52,7 +52,7 @@ var DumpIronman = cc.Sprite.extend({
 
 	jump: function() {
 		if( this.j < 2 ){
-			this.vy = DumpIronman.JUMPING_VELOCITY;
+			this.vy = DumpBearman.JUMPING_VELOCITY;
 			this.j++;
 		}
 			
@@ -68,7 +68,7 @@ var DumpIronman = cc.Sprite.extend({
 
 })
 
-DumpIronman.G = -1;
-DumpIronman.STARTING_VELOCITY = 15;
-DumpIronman.JUMPING_VELOCITY = 19;
-DumpIronman.STOP = 0;
+DumpBearman.G = -1;
+DumpBearman.STARTING_VELOCITY = 15;
+DumpBearman.JUMPING_VELOCITY = 19;
+DumpBearman.STOP = 0;

@@ -6,8 +6,8 @@ var GameLayer = cc.LayerColor.extend({
 
         this.createBg();
 
-        this.player = new DumpIronman();
-        this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 4 ) );
+        this.player = new DumpBearman();
+        this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 3 ) );
         this.addChild( this.player, 1 )
         this.player.scheduleUpdate();
 
