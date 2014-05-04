@@ -9,7 +9,7 @@ var shootBullet = cc.Sprite.extend({
 		this.bullet.movingAction = this.createAnimation();
 		this.bullet.runAction( this.bullet.movingAction );
 
-		this.bulletWay = [ 180, 330, 480 ]
+		this.bulletWay = [ 160, 310, 460 ]
 		// this.speed = 0;
 	},
 
@@ -23,7 +23,7 @@ var shootBullet = cc.Sprite.extend({
 			animation.addSpriteFrameWithFile( 'images/bullet2.png' );
 			animation.addSpriteFrameWithFile( 'images/bullet3.png' );
 			animation.addSpriteFrameWithFile( 'images/bullet4.png' );
-			animation.setDelayPerUnit( 0.3 );
+			animation.setDelayPerUnit( 0.1 );
 			return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	},
 

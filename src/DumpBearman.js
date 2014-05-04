@@ -7,7 +7,7 @@ var DumpBearman = cc.Sprite.extend({
         this.addChild( this.bear, 1 )
         this.bear.scheduleUpdate();
 
-		this.bear.movingAction = this.createAnimation();
+		this.bear.movingAction = this.runAnimation();
 		this.bear.runAction( this.bear.movingAction );
 
 		this.vy = DumpBearman.STARTING_VELOCITY;
@@ -18,16 +18,23 @@ var DumpBearman = cc.Sprite.extend({
 	},
 	
 
-	createAnimation: function() {
+	runAnimation: function() {
 		var animation = new cc.Animation.create();
 			animation.addSpriteFrameWithFile( 'images/sprite1.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite2.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite3.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite4.png' );
-			animation.addSpriteFrameWithFile( 'images/sprite5.png' );
-			animation.addSpriteFrameWithFile( 'images/sprite6.png' );
-			animation.addSpriteFrameWithFile( 'images/sprite7.png' );
-			animation.addSpriteFrameWithFile( 'images/sprite8.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite5-1.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite6-1.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite7-1.png' );
+			animation.addSpriteFrameWithFile( 'images/sprite8-1.png' );
+			animation.setDelayPerUnit( 0.1 );
+			return cc.RepeatForever.create( cc.Animate.create( animation ) );
+	},
+
+	jumpAnimation: function() {
+		var animation = new cc.Animation.create();
+			animation.addSpriteFrameWithFile( 'images/sprite5-1.png' );
 			animation.setDelayPerUnit( 0.1 );
 			return cc.RepeatForever.create( cc.Animate.create( animation ) );
 	},
@@ -47,7 +54,14 @@ var DumpBearman = cc.Sprite.extend({
 		}
 		if( pos.y == screenHeight / 3 ){
 			this.j = 0;
+			
 		}
+    },
+
+    run: function() {
+    	this.bear.stopAction( this.bear.movingAction );
+		this.bear.movingAction = this.runAnimation();
+		this.bear.runAction( this.bear.movingAction );
     },
 
 	jump: function() {
@@ -55,7 +69,15 @@ var DumpBearman = cc.Sprite.extend({
 			this.vy = DumpBearman.JUMPING_VELOCITY;
 			this.j++;
 		}
-			
+		
+		this.bear.stopAction( this.bear.movingAction );
+		this.bear.movingAction = this.jumpAnimation();
+		this.bear.runAction( this.bear.movingAction );
+		
+	},
+
+	slash: function() {
+
 	},
 
 	start: function() {
