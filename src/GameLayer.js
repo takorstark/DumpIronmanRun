@@ -60,8 +60,8 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     createBg: function() {
-        this.bg = cc.Sprite.create( ' images/bg1.png ' );
-        this.bg.setPosition( new cc.Point( 400, 390 ) );
+        this.bg = cc.Sprite.create( ' images/bg2.png ' );
+        this.bg.setPosition( new cc.Point( 400, 350 ) );
         this.addChild( this.bg );
     },
 
