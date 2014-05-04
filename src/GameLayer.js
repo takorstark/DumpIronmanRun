@@ -21,8 +21,6 @@ var GameLayer = cc.LayerColor.extend({
 
         this.state = GameLayer.STATES.FRONT;
 
-        // this.rock = null;
-
         this.scheduleUpdate();
 
         return true;
@@ -52,6 +50,17 @@ var GameLayer = cc.LayerColor.extend({
         } 
     },
 
+    createBullet: function() {
+        this.shoot = [ new shootBullet(), new shootBullet(), new shootBullet() ];
+        for(var i = 0; i < 2; i++ ){
+            this.shoot[i].randomPositionY();
+            
+            this.addChild( this.shoot[i], 1 );
+            this.shoot[i].setPositionX( -1 * i * Math.floor( ( screenWidth / 3 ) ) );
+            this.shoot[i].scheduleUpdate();
+        }
+    },
+
     createRock: function() {
         this.rock = new Rock();
         this.rock.setPosition( new cc.Point( 900, 275 ) );
@@ -66,7 +75,8 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     startGame: function() {
-        this.createRock();
+        // this.createRock();
+        this.createBullet();
         this.player.start();
         this.player.jump();
     },

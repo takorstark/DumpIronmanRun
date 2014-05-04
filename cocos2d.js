@@ -15,7 +15,8 @@
             'src/GameLayer.js',
             'src/DumpBearman.js',
             'src/GameGround.js',
-            'src/Rock.js'     //add your own files in order here
+            'src/Rock.js' ,
+            'src/Bullet.js'     //add your own files in order here
         ]
     };
 
