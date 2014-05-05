@@ -28,27 +28,46 @@ var GameLayer = cc.LayerColor.extend({
 
     onKeyDown: function( e ){
         this.player.start();
+
         if( this.state == GameLayer.STATES.FRONT ) {
             this.startGame();
             this.state = GameLayer.STATES.STARTED;
         } else if( this.state == GameLayer.STATES.STARTED ) {
-            if( e == cc.KEY.space && !this.pressed ){
-                this.pressed = true;
-                 this.player.jump();
-                 this.j++;
+            if( e == 32 && !this.pressed_space ){
+                this.pressed_space = true;
+                this.player.jump();
+                this.j++;
             }
-            else if( e == cc.KEY.  )
+            else if( e == 83 && !this.pressed_s ){
+                this.pressed_s = true;
+                this.player.slashing();
+                this.createSlashEffect();
+            }
                
         } 
+
+
     },
 
     onKeyUp : function ( e ) {
         if( this.state == GameLayer.STATES.STARTED ) {
-            if( e == cc.KEY.space&& this.pressed){
-                this.pressed = false;
+            if( e == 32 && this.pressed_space ){
+                this.pressed_space = false;
+            }
+            else if( e == 83 && this.pressed_s ){
+                this.pressed_s = false;
             }    
                
         } 
+    },
+
+    createSlashEffect: function() {
+        var posX = this.player.getPositionX();
+        var posY = this.player.getPositionY();
+
+        this.effect = new SlashEffect();
+        this.effect.setPosition( new cc.Point( posX + 60, posY - 40) );
+        this.addChild( this.effect );
     },
 
     createBullet: function() {
@@ -76,7 +95,6 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     startGame: function() {
-        // this.createRock();
         this.createBullet();
         this.player.start();
         this.player.jump();
