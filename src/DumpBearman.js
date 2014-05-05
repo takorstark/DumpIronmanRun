@@ -65,14 +65,11 @@ var DumpBearman = cc.Sprite.extend({
 
 	slashAnimation: function() {
 		var animation = new cc.Animation.create();
-			// animation.addSpriteFrameWithFile( 'images/sprite-slash1.png' );
-			// animation.addSpriteFrameWithFile( 'images/sprite-slash2.png' );
-			// animation.addSpriteFrameWithFile( 'images/sprite-slash3.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite5-1.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite6-1.png' );
 			animation.addSpriteFrameWithFile( 'images/sprite7-1.png' );
-			animation.addSpriteFrameWithFile( 'images/sprite8-1.png' );
-			animation.setDelayPerUnit( 0.08 );
+			// animation.addSpriteFrameWithFile( 'images/sprite8-1.png' );
+			animation.setDelayPerUnit( 0.03 );
 			return cc.Animate.create( animation );
 	},
 
@@ -103,6 +100,7 @@ var DumpBearman = cc.Sprite.extend({
 		this.bear.movingAction = this.slashAnimation();
 		this.bear.runAction( this.bear.movingAction );
 
+		this.run = true;
 	},
 
 	start: function() {
