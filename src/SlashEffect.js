@@ -11,8 +11,11 @@ var SlashEffect = cc.Sprite.extend({
 	update: function() {
 		var pos = this.getPositionX();
 
-		this.setPositionX( pos + 5 );
+		this.setPositionX( pos + 10 );
 
+		if( pos > screenWidth ){
+			this.removeChild( this.effect );
+		}
 	},
 
 })

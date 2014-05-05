@@ -10,7 +10,7 @@ var shootBullet = cc.Sprite.extend({
 		this.bullet.runAction( this.bullet.movingAction );
 
 		this.bulletWay = [ 160, 310, 460 ]
-		this.speed = [ 3, 5, 7, 9, 11, 13, 15 ]
+		this.speed = [ 7, 9, 11, 13, 15, 17 ]
 		this.bulletSpeed = 3;
 	},
 
@@ -31,7 +31,7 @@ var shootBullet = cc.Sprite.extend({
 	moveBullet: function() {
 		this.setPositionX( this.getPositionX() - this.bulletSpeed );
 
-		if( this.getPositionX() < 0 ){
+		if( this.getBoundingBoxToWorld().x < 0 ){
 			this.randomPositionY();
 			this.bulletSpeed = this.randomSpeed();
 		}
@@ -43,7 +43,7 @@ var shootBullet = cc.Sprite.extend({
 	},
 
 	randomSpeed: function() {
-		var index = Math.floor( Math.random() * 7 );
+		var index = Math.floor( Math.random() * 6 );
 		return this.speed[ index ];
 	},
 

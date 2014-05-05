@@ -22,6 +22,10 @@ var GameLayer = cc.LayerColor.extend({
         this.bulletList = [];
         this.effectList = [];
 
+        this.heart = [];
+
+        this.randomTime( Math.round( Math.random() * 7 ) + 5 );
+
         this.scheduleUpdate();
 
         return true;
@@ -138,9 +142,16 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.bg );
     },
 
+    randomTime: function( t ) {
+        this.scheduleOnce( function( ){ 
+            this.createBullet();
+            this.randomTime( Math.round( Math.random() * 7 ) + 5 );
+        } , t);
+    },
+
     startGame: function() {
-        this.createBullet();
         this.player.start();
+        this.player.jump();
     },
 
 });
