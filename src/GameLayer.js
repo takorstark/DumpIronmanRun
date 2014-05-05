@@ -7,23 +7,28 @@ var GameLayer = cc.LayerColor.extend({
         this.createBg();
 
         this.player = new DumpBearman();
-        this.player.setPosition( new cc.Point( screenWidth / 4, screenHeight / 3 ) );
+        this.player.setPosition( new cc.Point( screenWidth / 5, screenHeight / 3 ) );
         this.addChild( this.player, 1 )
         this.player.scheduleUpdate();
 
         this.ground = new GameGround();
-        // this.ground.setPosition( new cc.Point( screenWidth / 2,  screenHeight / 12 ) );
         this.addChild( this.ground );
         this.ground.scheduleUpdate();
-
 
         this.setKeyboardEnabled( true );
 
         this.state = GameLayer.STATES.FRONT;
 
+        this.bulletList = [];
+        this.effectList = [];
+
         this.scheduleUpdate();
 
         return true;
+    },
+
+    update: function( dt ) {
+        this.checkCollide();
     },
 
     onKeyDown: function( e ){
@@ -49,7 +54,7 @@ var GameLayer = cc.LayerColor.extend({
 
     },
 
-    onKeyUp : function ( e ) {
+    onKeyUp: function ( e ) {
         if( this.state == GameLayer.STATES.STARTED ) {
             if( e == 32 && this.pressed_space ){
                 this.pressed_space = false;
@@ -61,23 +66,62 @@ var GameLayer = cc.LayerColor.extend({
         } 
     },
 
+    checkCollide: function() {
+        for( var i = 0; i < this.bulletList.length; i++ ){
+            for( var j = 0; j < this.effectList.length; j++ ){
+                var bullet = this.bulletList[i];
+                var effect = this.effectList[j];
+
+                if( this.checkBulletDestroy( effect.getPositionX(), effect.getPositionY(), 
+                    bullet.getPositionX(), bullet.getPositionY() ) ){
+                    
+
+                    this.deleteEffect( effect );
+                    this.deleteBullet( bullet );
+
+                    break;
+                }
+            }
+        }  
+    },
+
+    checkBulletDestroy: function( effectX, effectY, bulletX, bulletY ) {
+        // alert(effectX+ " "+ bulletX);
+        return Math.abs( effectX - bulletX ) <= 50 && Math.abs( effectY - bulletY ) < 30;
+    },
+
+    deleteEffect: function( effect ) {
+        var i = this.effectList.indexOf( effect );
+        if( i >= 0 ) this.effectList.splice( i, 1 );
+        this.removeChild( effect ); 
+    },
+
+    deleteBullet: function( bullet ) {
+        var i = this.bulletList.indexOf( bullet );
+        if( i >= 0 ) this.bulletList.splice( i, 1 );
+        this.removeChild( bullet );
+    },
+
     createSlashEffect: function() {
         var posX = this.player.getPositionX();
         var posY = this.player.getPositionY();
 
         this.effect = new SlashEffect();
         this.effect.setPosition( new cc.Point( posX + 60, posY - 40) );
+
+        this.effectList.push( this.effect );
         this.addChild( this.effect );
     },
 
     createBullet: function() {
-        this.shoot = [ new shootBullet(), new shootBullet(), new shootBullet() ];
+        this.bullet = [ new shootBullet(), new shootBullet(), new shootBullet() ];
         for(var i = 0; i < 2; i++ ){
-            this.shoot[i].randomPositionY();
+            this.bullet[i].randomPositionY();
             
-            this.addChild( this.shoot[i], 1 );
-            this.shoot[i].setPositionX( -1 * i * Math.floor( ( screenWidth / 3 ) ) );
-            this.shoot[i].scheduleUpdate();
+            this.bulletList.push( this.bullet[i] );
+            this.addChild( this.bullet[i], 1 );
+            this.bullet[i].setPositionX( -1 * i * Math.floor( ( screenWidth / 3 ) ) );
+            this.bullet[i].scheduleUpdate();
         }
     },
 
@@ -97,9 +141,7 @@ var GameLayer = cc.LayerColor.extend({
     startGame: function() {
         this.createBullet();
         this.player.start();
-        this.player.jump();
     },
-
 
 });
 

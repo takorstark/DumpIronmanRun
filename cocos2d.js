@@ -17,7 +17,8 @@
             'src/GameGround.js',
             'src/Rock.js' ,
             'src/Bullet.js',
-            'src/SlashEffect.js'     //add your own files in order here
+            'src/SlashEffect.js',
+            'src/ColDetect.js'     //add your own files in order here
         ]
     };
 
