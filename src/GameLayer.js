@@ -26,6 +26,8 @@ var GameLayer = cc.LayerColor.extend({
 
         this.randomTime( Math.round( Math.random() * 7 ) + 5 );
 
+        this.createHeart();
+
         this.scheduleUpdate();
 
         return true;
@@ -40,7 +42,8 @@ var GameLayer = cc.LayerColor.extend({
 
         if( this.state == GameLayer.STATES.FRONT ) {
             this.startGame();
-            this.state = GameLayer.STATES.STARTED;
+            if( e == 32 )
+                this.state = GameLayer.STATES.STARTED;
         } else if( this.state == GameLayer.STATES.STARTED ) {
             if( e == 32 && !this.pressed_space ){
                 this.pressed_space = true;
@@ -90,20 +93,18 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     checkBulletDestroy: function( effectX, effectY, bulletX, bulletY ) {
-        // alert(effectX+ " "+ bulletX);
         return Math.abs( effectX - bulletX ) <= 50 && Math.abs( effectY - bulletY ) < 30;
     },
 
-    deleteEffect: function( effect ) {
-        var i = this.effectList.indexOf( effect );
-        if( i >= 0 ) this.effectList.splice( i, 1 );
-        this.removeChild( effect ); 
-    },
 
-    deleteBullet: function( bullet ) {
-        var i = this.bulletList.indexOf( bullet );
-        if( i >= 0 ) this.bulletList.splice( i, 1 );
-        this.removeChild( bullet );
+    createHeart: function() {
+        for( var i = 0; i < 5; i++ ){
+            var temp_heart = new Heart();
+
+            this.heart.push( temp_heart );
+            temp_heart.setPosition( new cc.Point( 50 + (i * 60), 560 ) );
+            this.addChild( temp_heart );
+        }
     },
 
     createSlashEffect: function() {
@@ -140,6 +141,18 @@ var GameLayer = cc.LayerColor.extend({
         this.bg = cc.Sprite.create( ' images/bg2.png ' );
         this.bg.setPosition( new cc.Point( 400, 350 ) );
         this.addChild( this.bg );
+    },
+
+    deleteEffect: function( effect ) {
+        var i = this.effectList.indexOf( effect );
+        if( i >= 0 ) this.effectList.splice( i, 1 );
+        this.removeChild( effect ); 
+    },
+
+    deleteBullet: function( bullet ) {
+        var i = this.bulletList.indexOf( bullet );
+        if( i >= 0 ) this.bulletList.splice( i, 1 );
+        this.removeChild( bullet );
     },
 
     randomTime: function( t ) {
