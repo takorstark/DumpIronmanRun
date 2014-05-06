@@ -34,8 +34,6 @@ var GameLayer = cc.LayerColor.extend({
 
         this.createHeart();
 
-
-
         this.scheduleUpdate();
 
         return true;
@@ -141,13 +139,6 @@ var GameLayer = cc.LayerColor.extend({
             this.bullet[i].setPositionX( -1 * i * Math.floor( ( screenWidth / 3 ) ) );
             this.bullet[i].scheduleUpdate();
         }
-    },
-
-    createRock: function() {
-        this.rock = new Rock();
-        this.rock.setPosition( new cc.Point( 900, 275 ) );
-        this.addChild( this.rock );
-        this.rock.scheduleUpdate();
     },
 
     createBg: function() {
