@@ -7,6 +7,7 @@ var GameLayer = cc.LayerColor.extend({
         this.createBg();
 
         this.player = new DumpBearman();
+        this.player.setAnchorPoint( new cc.Point( 0.5, 0.5 ) );
         this.player.setPosition( new cc.Point( screenWidth / 5, screenHeight / 3 ) );
         this.addChild( this.player, 1 )
         this.player.scheduleUpdate();
@@ -18,6 +19,7 @@ var GameLayer = cc.LayerColor.extend({
         this.score = 0;
 
         this.scorelabel = cc.LabelTTF.create( this.score, 'Arial', 50 );
+        this.scorelabel.setColor( new cc.Color3B( 255, 255, 0 ) );
         this.scorelabel.setPosition( new cc.Point( 750, 550 ) );
         this.addChild( this.scorelabel );
 
@@ -38,7 +40,7 @@ var GameLayer = cc.LayerColor.extend({
 
         // this.schedule(function(){ console.log(this.bulletList.length) }, 1);
 
-        this.schedule(function(){ console.log(this.effectList.length) }, 1);
+        // this.schedule(function(){ console.log(this.effectList.length) }, 1);
 
         return true;
     },
@@ -55,12 +57,10 @@ var GameLayer = cc.LayerColor.extend({
 
     onKeyDown: function( e ){
         this.player.start();
-
-        if( this.state == GameLayer.STATES.FRONT ) {
-            this.startGame();
-            if( e == 32 )
-                this.state = GameLayer.STATES.STARTED;
-        } else if( this.state == GameLayer.STATES.STARTED ) {
+        this.startGame();
+        this.state = GameLayer.STATES.STARTED;
+        
+        if( this.state == GameLayer.STATES.STARTED ) {
             if( e == 32 && !this.pressed_space ){
                 this.pressed_space = true;
                 this.player.jump();
@@ -122,7 +122,8 @@ var GameLayer = cc.LayerColor.extend({
                     this.removeChild(bullet);
                     this.bulletList.splice(i,1);
                     i--;
-                    console.log( 'CRASH!' );
+                    // console.log( 'CRASH!' );
+                    this.deleteHeart();
 
                     break;
 
@@ -136,7 +137,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     checkAttacked: function( bearX, bearY, bulletX, bulletY ) {
-        return (Math.abs( bearX - bulletX ) <= 50) && (Math.abs( bearY - bulletY ) < 50);
+        return (Math.abs( bearX - bulletX ) <= 60) && (Math.abs( bearY - bulletY ) < 70);
     },
 
     createHeart: function() {
@@ -190,6 +191,15 @@ var GameLayer = cc.LayerColor.extend({
         this.removeChild( bullet );
     },
 
+    deleteHeart: function(  ) {
+        var life = this.heart.length;
+
+        this.removeChild( this.heart[ life-1 ] );
+        this.heart.splice( life - 1, 1 );
+        life = this.heart.length;
+
+    },
+
     randomTime: function( t ) {
         this.scheduleOnce( function( ){ 
             this.createBullet();
@@ -199,7 +209,6 @@ var GameLayer = cc.LayerColor.extend({
 
     startGame: function() {
         this.player.start();
-        this.player.jump();
     },
 
 });

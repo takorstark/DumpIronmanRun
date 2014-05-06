@@ -10,7 +10,7 @@ var shootBullet = cc.Sprite.extend({
 		this.bullet.runAction( this.bullet.movingAction );
 
 		this.bulletWay = [ 160, 310, 460 ]
-		this.speed = [ 7, 9, 11, 13, 15, 17 ]
+		this.speed = [ 9, 11, 13, 15, 17, 19 ]
 		this.bulletSpeed = 3;
 	},
 
