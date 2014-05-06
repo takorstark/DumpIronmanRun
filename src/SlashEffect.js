@@ -17,7 +17,6 @@ var SlashEffect = cc.Sprite.extend({
 
 		if( pos > screenWidth ){
 			this.removeChild( this.effect );
-			// this.setPosition(0,0);
 			this.removeFromParent();
 			this.gameLayer.deleteEffect( this );
 		}

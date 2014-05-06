@@ -32,7 +32,7 @@ var GameLayer = cc.LayerColor.extend({
 
         this.heart = [];
 
-        this.randomTime( Math.round( Math.random() * 7 ) + 2 );
+        this.randomTime( Math.round( Math.random() * 3 ) + 1 );
 
         this.createHeart();
 
@@ -98,12 +98,13 @@ var GameLayer = cc.LayerColor.extend({
 
                 if( this.checkBulletDestroy( effect.getPositionX(), effect.getPositionY(), 
                     bullet.getPositionX(), bullet.getPositionY() ) ){
-
-                    console.log( 'hello' );
                 
                     this.deleteEffect( effect );
                     this.deleteBullet( bullet );
-                    this.score+5;
+
+                    this.createBombEffect( bullet.getPositionX(), bullet.getPositionY() );
+                    
+                    this.score += 5;
 
                     break;
                 }
@@ -122,7 +123,7 @@ var GameLayer = cc.LayerColor.extend({
                     this.removeChild(bullet);
                     this.bulletList.splice(i,1);
                     i--;
-                    // console.log( 'CRASH!' );
+
                     this.deleteHeart();
 
                     break;
@@ -148,6 +149,12 @@ var GameLayer = cc.LayerColor.extend({
             temp_heart.setPosition( new cc.Point( 60 + (i * 65), 555 ) );
             this.addChild( temp_heart );
         }
+    },
+
+    createBombEffect: function( posX, posY ) {
+        this.bomb = new BombEffect();
+        this.bomb.setPosition( new cc.Point( posX, posY ) );
+        this.addChild( this.bomb );
     },
 
     createSlashEffect: function() {
@@ -211,7 +218,7 @@ var GameLayer = cc.LayerColor.extend({
     randomTime: function( t ) {
         this.scheduleOnce( function( ){ 
             this.createBullet();
-            this.randomTime( Math.round( Math.random() * 7 ) + 2 );
+            this.randomTime( Math.round( Math.random() * 3 ) + 1 );
         } , t);
     },
 
@@ -220,8 +227,13 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     endGame: function() {
-        if( confirm( ' GAME OVER ! ' ) ){
-            location.reload();
+        while( true ){
+            if( confirm( ' GAME OVER ! ' ) ){
+                location.reload();
+            } else {
+                continue;
+            }
+
         }
     }
 
