@@ -18,10 +18,7 @@ var GameLayer = cc.LayerColor.extend({
 
         this.score = 0;
 
-        this.scorelabel = cc.LabelTTF.create( this.score, 'Arial', 50 );
-        this.scorelabel.setColor( new cc.Color3B( 255, 255, 0 ) );
-        this.scorelabel.setPosition( new cc.Point( 745, 545 ) );
-        this.addChild( this.scorelabel );
+        this.createScoreLabel();
 
         this.setKeyboardEnabled( true );
 
@@ -141,6 +138,20 @@ var GameLayer = cc.LayerColor.extend({
         return Math.abs( bearX - bulletX ) <= 60 && Math.abs( bearY - bulletY ) < 70;
     },
 
+    createScoreLabel: function() {
+        this.scorelabel = cc.LabelTTF.create( this.score, 'Arial', 50 );
+        this.scorelabel.setColor( new cc.Color3B( 255, 255, 0 ) );
+        this.scorelabel.setPosition( new cc.Point( 745, 545 ) );
+        this.addChild( this.scorelabel );
+    },
+
+    createEndScoreLabel: function() {
+        this.endscorelabel = cc.LabelTTF.create( this.score, 'Arial', 100 );
+        this.endscorelabel.setColor( new cc.Color3B( 255, 255, 0 ) );
+        this.endscorelabel.setPosition( new cc.Point( 660, 390 ) );
+        this.addChild( this.endscorelabel, 10 );
+    },
+
     createHeart: function() {
         for( var i = 0; i < 5; i++ ){
             var temp_heart = new Heart();
@@ -236,6 +247,9 @@ var GameLayer = cc.LayerColor.extend({
         this.cleanup();
 
         this.createEndBg();
+
+        this.createEndScoreLabel();
+        this.updateScoreLabel();
         
         this.scheduleOnce( function() {
             if( confirm( ' Try Again ? ' ) ){

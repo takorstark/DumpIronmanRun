@@ -25,9 +25,9 @@ var GameGround = cc.Sprite.extend({
 		this.pos2 = this.ground2.getPositionX();
 		this.pos3 = this.ground3.getPositionX();
 
-		this.ground1.setPositionX( this.pos1 - 5 );
-		this.ground2.setPositionX( this.pos2 - 5 );
-		this.ground3.setPositionX( this.pos3 - 5 );
+		this.ground1.setPositionX( this.pos1 - 7 );
+		this.ground2.setPositionX( this.pos2 - 7 );
+		this.ground3.setPositionX( this.pos3 - 7 );
 
 		if( this.pos1 < -1600 ){
 			this.ground1.setPositionX( 790 );
