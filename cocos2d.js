@@ -19,7 +19,8 @@
             'src/Bullet.js',
             'src/SlashEffect.js',
             'src/BombEffect.js',
-            'src/Heart.js'     //add your own files in order here
+            'src/Heart.js',
+            'src/MenuLayer.js'    //add your own files in order here
         ]
     };
 

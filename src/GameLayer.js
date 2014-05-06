@@ -74,7 +74,6 @@ var GameLayer = cc.LayerColor.extend({
                
         } 
 
-
     },
 
     onKeyUp: function ( e ) {
@@ -120,8 +119,9 @@ var GameLayer = cc.LayerColor.extend({
 
             if( this.checkAttacked( bear.getPositionX(), bear.getPositionY(), 
                     bullet.getPositionX(), bullet.getPositionY() ) ){
-                    this.removeChild(bullet);
-                    this.bulletList.splice(i,1);
+
+                    this.removeChild( bullet );
+                    this.bulletList.splice( i, 1 );
                     i--;
 
                     this.deleteHeart();
@@ -170,7 +170,7 @@ var GameLayer = cc.LayerColor.extend({
 
     createBullet: function() {
         this.bullet = [ new shootBullet(), new shootBullet(), new shootBullet() ];
-        for(var i = 0; i < 2; i++ ){
+        for(var i = 0; i < 3; i++ ){
             this.bullet[i].randomPositionY();
             
             this.bulletList.push( this.bullet[i] );
@@ -184,6 +184,12 @@ var GameLayer = cc.LayerColor.extend({
         this.bg = cc.Sprite.create( ' images/bg2.png ' );
         this.bg.setPosition( new cc.Point( 400, 350 ) );
         this.addChild( this.bg );
+    },
+
+    createEndBg: function() {
+        this.endBg = cc.Sprite.create( ' images/EndScene.png ' );
+        this.endBg.setPosition( new cc.Point( 400, 300 ) );
+        this.addChild( this.endBg, 1 );
     },
 
     deleteEffect: function( effect ) {
@@ -227,14 +233,18 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     endGame: function() {
-        while( true ){
-            if( confirm( ' GAME OVER ! ' ) ){
-                location.reload();
-            } else {
-                continue;
-            }
+        this.cleanup();
 
-        }
+        this.createEndBg();
+        
+        this.scheduleOnce( function() {
+            if( confirm( ' Try Again ? ' ) ){
+                location.reload();
+            }
+        }, 3);
+
+        
+  
     }
 
 });
