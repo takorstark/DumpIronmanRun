@@ -20,7 +20,7 @@ var GameLayer = cc.LayerColor.extend({
 
         this.scorelabel = cc.LabelTTF.create( this.score, 'Arial', 50 );
         this.scorelabel.setColor( new cc.Color3B( 255, 255, 0 ) );
-        this.scorelabel.setPosition( new cc.Point( 750, 550 ) );
+        this.scorelabel.setPosition( new cc.Point( 745, 545 ) );
         this.addChild( this.scorelabel );
 
         this.setKeyboardEnabled( true );
@@ -59,7 +59,7 @@ var GameLayer = cc.LayerColor.extend({
         this.player.start();
         this.startGame();
         this.state = GameLayer.STATES.STARTED;
-        
+
         if( this.state == GameLayer.STATES.STARTED ) {
             if( e == 32 && !this.pressed_space ){
                 this.pressed_space = true;
@@ -103,7 +103,7 @@ var GameLayer = cc.LayerColor.extend({
                 
                     this.deleteEffect( effect );
                     this.deleteBullet( bullet );
-                    this.score++;
+                    this.score+5;
 
                     break;
                 }
@@ -137,7 +137,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     checkAttacked: function( bearX, bearY, bulletX, bulletY ) {
-        return (Math.abs( bearX - bulletX ) <= 60) && (Math.abs( bearY - bulletY ) < 70);
+        return Math.abs( bearX - bulletX ) <= 60 && Math.abs( bearY - bulletY ) < 70;
     },
 
     createHeart: function() {
@@ -145,7 +145,7 @@ var GameLayer = cc.LayerColor.extend({
             var temp_heart = new Heart();
 
             this.heart.push( temp_heart );
-            temp_heart.setPosition( new cc.Point( 50 + (i * 60), 560 ) );
+            temp_heart.setPosition( new cc.Point( 60 + (i * 65), 555 ) );
             this.addChild( temp_heart );
         }
     },
@@ -191,12 +191,20 @@ var GameLayer = cc.LayerColor.extend({
         this.removeChild( bullet );
     },
 
-    deleteHeart: function(  ) {
+    deleteHeart: function() {
         var life = this.heart.length;
 
         this.removeChild( this.heart[ life-1 ] );
         this.heart.splice( life - 1, 1 );
         life = this.heart.length;
+
+        if( life == 0 ){
+            this.removeChild( this.heart ); 
+            this.scheduleOnce( function() {
+                this.endGame();
+            },0.1);
+            
+        } 
 
     },
 
@@ -210,6 +218,12 @@ var GameLayer = cc.LayerColor.extend({
     startGame: function() {
         this.player.start();
     },
+
+    endGame: function() {
+        if( confirm( ' GAME OVER ! ' ) ){
+            location.reload();
+        }
+    }
 
 });
 
