@@ -30,17 +30,22 @@ var GameLayer = cc.LayerColor.extend({
 
         this.heart = [];
 
-        this.randomTime( Math.round( Math.random() * 7 ) + 5 );
+        this.randomTime( Math.round( Math.random() * 7 ) + 2 );
 
         this.createHeart();
 
         this.scheduleUpdate();
 
+        // this.schedule(function(){ console.log(this.bulletList.length) }, 1);
+
+        this.schedule(function(){ console.log(this.effectList.length) }, 1);
+
         return true;
     },
 
     update: function( dt ) {
-        this.checkCollide();
+        this.checkSlashBulletCollide();
+        this.checkPlayerBulletCollide();
         this.updateScoreLabel();
     },
 
@@ -84,14 +89,17 @@ var GameLayer = cc.LayerColor.extend({
         } 
     },
 
-    checkCollide: function() {
+    checkSlashBulletCollide: function() {
         for( var i = 0; i < this.bulletList.length; i++ ){
             for( var j = 0; j < this.effectList.length; j++ ){
                 var bullet = this.bulletList[i];
                 var effect = this.effectList[j];
+                var bear = this.player;
 
                 if( this.checkBulletDestroy( effect.getPositionX(), effect.getPositionY(), 
                     bullet.getPositionX(), bullet.getPositionY() ) ){
+
+                    console.log( 'hello' );
                 
                     this.deleteEffect( effect );
                     this.deleteBullet( bullet );
@@ -99,14 +107,37 @@ var GameLayer = cc.LayerColor.extend({
 
                     break;
                 }
+
             }
         }  
+    },
+
+    checkPlayerBulletCollide: function() {
+        for( var i = 0; i < this.bulletList.length; i++ ){
+            var bullet = this.bulletList[i];
+            var bear = this.player;
+
+            if( this.checkAttacked( bear.getPositionX(), bear.getPositionY(), 
+                    bullet.getPositionX(), bullet.getPositionY() ) ){
+                    this.removeChild(bullet);
+                    this.bulletList.splice(i,1);
+                    i--;
+                    console.log( 'CRASH!' );
+
+                    break;
+
+            }
+
+        }
     },
 
     checkBulletDestroy: function( effectX, effectY, bulletX, bulletY ) {
         return Math.abs( effectX - bulletX ) <= 50 && Math.abs( effectY - bulletY ) < 30;
     },
 
+    checkAttacked: function( bearX, bearY, bulletX, bulletY ) {
+        return (Math.abs( bearX - bulletX ) <= 50) && (Math.abs( bearY - bulletY ) < 50);
+    },
 
     createHeart: function() {
         for( var i = 0; i < 5; i++ ){
@@ -122,7 +153,7 @@ var GameLayer = cc.LayerColor.extend({
         var posX = this.player.getPositionX();
         var posY = this.player.getPositionY();
 
-        this.effect = new SlashEffect();
+        this.effect = new SlashEffect( this );
         this.effect.setPosition( new cc.Point( posX + 60, posY - 40) );
 
         this.effectList.push( this.effect );
@@ -162,7 +193,7 @@ var GameLayer = cc.LayerColor.extend({
     randomTime: function( t ) {
         this.scheduleOnce( function( ){ 
             this.createBullet();
-            this.randomTime( Math.round( Math.random() * 7 ) + 5 );
+            this.randomTime( Math.round( Math.random() * 7 ) + 2 );
         } , t);
     },
 

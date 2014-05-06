@@ -1,10 +1,12 @@
 var SlashEffect = cc.Sprite.extend({
-	ctor: function() {
+	ctor: function( layer ) {
 		this._super();
 
 		this.effect = cc.Sprite.create( 'images/slash_ef.png' );
 		this.addChild( this.effect );
 		this.scheduleUpdate();
+
+		this.gameLayer = layer;
 
 	},
 
@@ -15,6 +17,9 @@ var SlashEffect = cc.Sprite.extend({
 
 		if( pos > screenWidth ){
 			this.removeChild( this.effect );
+			// this.setPosition(0,0);
+			this.removeFromParent();
+			this.gameLayer.deleteEffect( this );
 		}
 	},
 
