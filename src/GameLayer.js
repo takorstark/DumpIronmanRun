@@ -15,6 +15,12 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.ground );
         this.ground.scheduleUpdate();
 
+        this.score = 0;
+
+        this.scorelabel = cc.LabelTTF.create( this.score, 'Arial', 50 );
+        this.scorelabel.setPosition( new cc.Point( 750, 550 ) );
+        this.addChild( this.scorelabel );
+
         this.setKeyboardEnabled( true );
 
         this.state = GameLayer.STATES.FRONT;
@@ -28,6 +34,8 @@ var GameLayer = cc.LayerColor.extend({
 
         this.createHeart();
 
+
+
         this.scheduleUpdate();
 
         return true;
@@ -35,6 +43,11 @@ var GameLayer = cc.LayerColor.extend({
 
     update: function( dt ) {
         this.checkCollide();
+        this.updateScoreLabel();
+    },
+
+    updateScoreLabel: function(){
+        this.scorelabel.setString( this.score );
     },
 
     onKeyDown: function( e ){
@@ -81,10 +94,10 @@ var GameLayer = cc.LayerColor.extend({
 
                 if( this.checkBulletDestroy( effect.getPositionX(), effect.getPositionY(), 
                     bullet.getPositionX(), bullet.getPositionY() ) ){
-                    
-
+                
                     this.deleteEffect( effect );
                     this.deleteBullet( bullet );
+                    this.score++;
 
                     break;
                 }
