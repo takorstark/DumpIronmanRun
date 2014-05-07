@@ -12,7 +12,7 @@ var MenuLayer = cc.Layer.extend({
         var winsize = director.getWinSize();
         var center = cc.p( 400, 300 );
        
-        var bg = cc.Sprite.create("images/StartScene.png");
+        var bg = cc.Sprite.create( ' images/StartScene.png ' );
         bg.setPosition( center );
         this.addChild( bg );
 

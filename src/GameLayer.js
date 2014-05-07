@@ -52,6 +52,10 @@ var GameLayer = cc.LayerColor.extend({
         this.scorelabel.setString( this.score );
     },
 
+    updateEndScoreLabel: function() {
+        this.endscorelabel.setString( this.score );
+    },
+
     onKeyDown: function( e ){
         this.player.start();
         this.startGame();
@@ -192,7 +196,7 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     createBg: function() {
-        this.bg = cc.Sprite.create( ' images/bg2.png ' );
+        this.bg = cc.Sprite.create( ' images/bg.png ' );
         this.bg.setPosition( new cc.Point( 400, 350 ) );
         this.addChild( this.bg );
     },
@@ -226,7 +230,7 @@ var GameLayer = cc.LayerColor.extend({
             this.removeChild( this.heart ); 
             this.scheduleOnce( function() {
                 this.endGame();
-            },0.1);
+            }, 0.1);
             
         } 
 
@@ -249,7 +253,7 @@ var GameLayer = cc.LayerColor.extend({
         this.createEndBg();
 
         this.createEndScoreLabel();
-        this.updateScoreLabel();
+        this.updateEndScoreLabel();
         
         this.scheduleOnce( function() {
             if( confirm( ' Try Again ? ' ) ){
