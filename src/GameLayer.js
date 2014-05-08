@@ -6,23 +6,15 @@ var GameLayer = cc.LayerColor.extend({
 
         this.createBg();
 
-        this.player = new DumpBearman();
-        this.player.setAnchorPoint( new cc.Point( 0.5, 0.5 ) );
-        this.player.setPosition( new cc.Point( screenWidth / 5, screenHeight / 3 ) );
-        this.addChild( this.player, 1 )
-        this.player.scheduleUpdate();
+        this.createPlayer();
 
-        this.ground = new GameGround();
-        this.addChild( this.ground );
-        this.ground.scheduleUpdate();
+        this.createGameGround();
 
         this.score = 0;
 
         this.createScoreLabel();
 
         this.setKeyboardEnabled( true );
-
-        this.state = GameLayer.STATES.FRONT;
 
         this.bulletList = [];
         this.effectList = [];
@@ -32,6 +24,8 @@ var GameLayer = cc.LayerColor.extend({
         this.randomTime( Math.round( Math.random() * 3 ) + 1 );
 
         this.createHeart();
+
+        this.state = GameLayer.STATES.FRONT;
 
         this.scheduleUpdate();
 
@@ -129,7 +123,7 @@ var GameLayer = cc.LayerColor.extend({
 
                     this.scheduleOnce( function() {
                         this.removeChild( this.hurt );
-                    }, 0.2 );
+                    }, 0.1 );
 
                     this.deleteHeart();
 
@@ -146,6 +140,20 @@ var GameLayer = cc.LayerColor.extend({
 
     checkAttacked: function( bearX, bearY, bulletX, bulletY ) {
         return Math.abs( bearX - bulletX ) <= 60 && Math.abs( bearY - bulletY ) < 70;
+    },
+
+    createPlayer: function() {
+        this.player = new DumpBearman();
+        this.player.setAnchorPoint( new cc.Point( 0.5, 0.5 ) );
+        this.player.setPosition( new cc.Point( screenWidth / 5, screenHeight / 3 ) );
+        this.addChild( this.player, 1 )
+        this.player.scheduleUpdate();
+    },
+
+    createGameGround: function() {
+        this.ground = new GameGround();
+        this.addChild( this.ground );
+        this.ground.scheduleUpdate();
     },
 
     createScoreLabel: function() {
@@ -271,7 +279,7 @@ var GameLayer = cc.LayerColor.extend({
             if( confirm( ' Try Again ? ' ) ){
                 location.reload();
             }
-        }, 5);
+        }, 3);
 
         
   
