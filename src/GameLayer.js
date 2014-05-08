@@ -125,6 +125,12 @@ var GameLayer = cc.LayerColor.extend({
                     this.bulletList.splice( i, 1 );
                     i--;
 
+                    this.createHurtBg();
+
+                    this.scheduleOnce( function() {
+                        this.removeChild( this.hurt );
+                    }, 0.2 );
+
                     this.deleteHeart();
 
                     break;
@@ -201,10 +207,16 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild( this.bg );
     },
 
+    createHurtBg: function() {
+        this.hurt = cc.Sprite.create( ' images/hurt.png ' );
+        this.hurt.setPosition( new cc.Point( 400, 300 ) );
+        this.addChild( this.hurt, 2 );
+    },
+
     createEndBg: function() {
         this.endBg = cc.Sprite.create( ' images/EndScene.png ' );
         this.endBg.setPosition( new cc.Point( 400, 300 ) );
-        this.addChild( this.endBg, 1 );
+        this.addChild( this.endBg, 9 );
     },
 
     deleteEffect: function( effect ) {
@@ -259,7 +271,7 @@ var GameLayer = cc.LayerColor.extend({
             if( confirm( ' Try Again ? ' ) ){
                 location.reload();
             }
-        }, 3);
+        }, 5);
 
         
   

@@ -34,7 +34,9 @@ var g_resources = [
     {src: 'images/sprite7.png' },
     {src: 'images/sprite7-1.png' },
     {src: 'images/sprite8.png' },
-    {src: 'images/sprite8-1.png' }
+    {src: 'images/sprite8-1.png' },
+    {src: 'images/hurt.png' }
+
  
     //plist
  

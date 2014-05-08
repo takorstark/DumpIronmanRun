@@ -16,7 +16,6 @@
             'src/GameLayer.js',
             'src/DumpBearman.js',
             'src/GameGround.js',
-            'src/Rock.js' ,
             'src/Bullet.js',
             'src/SlashEffect.js',
             'src/BombEffect.js',
